@@ -190,6 +190,7 @@ stateFuncs = {
 			end
 
 			heli:setFuelGaugeTarget(0, true)
+			heli.isRemoteDriven = nil
 
 			local driver = heli.baseEnt.get_driver()
 			if driver and driver.valid then
@@ -804,6 +805,12 @@ heliBase = {
 	end,
 
 	landIfEmpty = function(self)
+		if self.isRemoteDriven then
+			if IsEntityBurnerOutOfFuel(self.baseEnt) then
+				self:OnDown()
+			end
+			return
+		end
 		local driver = self.baseEnt.get_driver()
 		if not driver or not driver.valid or IsEntityBurnerOutOfFuel(self.baseEnt) then
 			self:OnDown()
