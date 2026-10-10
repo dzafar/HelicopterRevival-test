@@ -1,0 +1,324 @@
+function vector2Sub(u, v)
+  if u.x ~= nil and v.x ~= nil then
+    return {x = u.x - v.x, y = u.y - v.y}
+  end
+  return {u[1]-v[1], u[2]-v[2]}
+end
+
+function titleCase(str)
+    return (str:gsub("(%a)([%w_']*)", function(first, rest)
+        return first:upper() .. rest:lower()
+    end))
+end
+
+function isNil(value)
+    return value == nil
+end
+
+function tableToString(table)
+	local s = ""
+	for k,v in pairs(table) do
+		s = s .. type(v) .. " '" .. k .. "': " .. tostring(v) .. "\n"
+	end
+	return s
+end
+
+function printTable(t, prefix)
+	if not prefix then
+		prefix = ""
+	end
+
+	for k,v in pairs(t) do
+		local typ = "[" .. type(v) .. "] "
+		local name = "'" .. k .. "' ="
+		local val = " " .. tostring(v)
+
+		if type(v) == "table" then
+			printA(prefix .. typ .. name)
+			printTable(v, prefix .. "___")
+
+		else
+			printA(prefix .. typ .. name .. val)
+		end
+	end
+end
+
+function printA(...)
+	local s = ""
+	local n = select("#", ...)
+	for i = 1, n do
+		s = s .. tostring(select(i, ...))
+		if i < n then
+			s = s .. ", "
+		end
+	end
+
+	for k,v in pairs(game.players) do
+		v.print(s)
+	end
+
+	return s
+end
+
+function printAF(...)
+	local t = {...}
+	table.insert(t, math.random())
+	return printA(unpack(t))
+end
+
+function getDistance(pos1, pos2)
+	return math.sqrt((pos2.x - pos1.x)^2 + (pos2.y - pos1.y)^2)
+end
+
+function equipmentGridHasItem(grid, itemName)
+	local contents = grid.get_contents()
+
+	for _, item in pairs(contents) do
+		if item.name == itemName and item.count > 0 then
+			return true
+		end
+	end
+	return false
+end
+
+function searchIndexInTable(table, obj, field)
+	if table then
+		for i, v in ipairs(table) do
+			if field and v[field] == obj then
+				return i
+			elseif v == obj then
+				return i
+			end
+		end
+	end
+end
+
+function searchInTable(table, obj, field)
+	if table then
+		for k, v in pairs(table) do
+			if field and v[field] == obj then
+				return v
+			elseif v == obj then
+				return v
+			end
+		end
+	end
+end
+
+function setMetatablesInGlobal(name, mt)
+	if storage[name] then
+		for k, v in pairs(storage[name]) do
+			setmetatable(v, mt)
+		end
+	end
+end
+
+function checkAndTickInGlobal(name)
+	if storage[name] then
+		for i = #storage[name], 1, -1 do
+			local v = storage[name][i]
+
+			if v.valid then
+				v:OnTick()
+			else
+				table.remove(storage[name], i)
+			end
+		end
+	end
+end
+
+function callInGlobal(storageTable, entryContent, ...)
+	if storage[storageTable] then
+		for _, entry in pairs(storage[storageTable]) do
+			if entry[entryContent] then entry[entryContent](entry, ...) end
+		end
+	end
+end
+
+function insertInGlobal(gName, val)
+	if not storage[gName] then storage[gName] = {} end
+	table.insert(storage[gName], val)
+	return val
+end
+
+function removeInGlobal(gName, val)
+	if storage[gName] then
+		for i, v in ipairs(storage[gName]) do
+			if v == val then
+				table.remove(storage[gName], i)
+				return v
+			end
+		end
+	end
+end
+
+function fEqual(a, b, prec)
+	if not prec then
+		prec = 0.001
+	end
+
+	return math.abs(a - b) <= prec
+end
+
+function versionStrToInt(s)
+	v = 0
+	for num in s:gmatch("%d+") do
+		v = v * 100 + tonumber(num)
+	end
+
+	return v
+end
+
+function concatStrTable(t, c)
+	local s = ""
+	for k,v in pairs(t) do
+		s = s .. v .. c
+	end
+
+	return s
+end
+
+function getIndexedPos(pos)
+	if pos[1] and pos[2] then
+		return {pos[1], pos[2]}
+	elseif pos.x and pos.y then
+		return {pos.x, pos.y}
+	end
+end
+
+string.startswith = function(str, strSub)
+	if str:len() < strSub:len() then
+		return false
+	end
+
+	return str:sub(1, strSub:len()) == strSub
+end
+
+function chopDecimal(val, place)
+	local mult = 10^(place or 0)
+	return math.floor(val * mult + 0.5) / mult
+end
+
+function extractPlayer (obj)
+	if obj and obj.valid then
+		if obj.is_player() then
+			return obj
+
+		elseif obj.player and obj.player.valid and obj.player.is_player() then
+			return obj.player
+		end
+	end
+
+	return nil
+end
+
+function getCarPlayers(car)
+	local d = extractPlayer(car.get_driver())
+	local p = extractPlayer(car.get_passenger())
+
+	local t = {}
+
+	if d then
+		table.insert(t, d)
+	end
+
+	if p then
+		table.insert(t, p)
+	end
+
+	return t
+end
+
+function playerHasEquipment(p, equipName)
+	return p.character and p.character.valid and
+		p.character.grid and p.character.grid.valid and
+		equipmentGridHasItem(p.character.grid, equipName)
+end
+
+--finds heli by cam id and assigns new name
+function renameEntity(self, e, mode)
+	local guiName = "heli_heliSelectionGui"
+	local text = ""
+
+	if e.name == 1 then --on_gui_click
+		text = e.element.parent.children[2].text
+	else --on_gui_confirmed
+		text = e.element.text
+	end
+
+	if mode == "pad" then
+		guiName = "heli_heliPadSelectionGui"
+	end
+
+	local id = string.gsub(e.element.parent.parent.parent.name, guiName.."_cam_", "")
+
+	if mode == "heli" then
+		self.guiElems.cams[tonumber(id) + 1].heli.name = text
+	else
+		self.guiElems.cams[tonumber(id) + 1].heliPad.name = text
+	end
+
+	e.element.parent.parent.destroy()
+	self:Rebuild(false)
+end
+
+--checks whether child already existing
+function guiHasChild(gui, name)
+	for i, v in ipairs(gui.children) do
+		if v.name == name then
+			return i
+		end
+	end
+
+	return nil
+end
+
+--builds the base GUI with close button
+function buildBaseGUI(self, els, caption, extra)
+	local duplicate = guiHasChild(els.parent, self.prefix .. "rootFrame")
+	if duplicate ~= nil then
+		els.parent.children[duplicate].destroy()
+	end
+
+	els.root = els.parent.add
+	{
+		type = "frame",
+		name = self.prefix .. "rootFrame",
+		direction = "vertical",
+	}
+	els.root.style.maximal_width = 1000
+	els.root.style.maximal_height = 700
+	els.flow = els.root.add{
+		type = "flow",
+		name = self.prefix.."flow",
+		direction = "horizontal",
+	}
+	els.flow.add{
+		type = "label",
+		name = self.prefix.."title",
+		caption = {caption},
+		style = "frame_title"
+	}
+	if extra ~= nil then
+		els.flow.add(extra.content)
+
+		if extra.properties ~= nil then
+			for property, value in pairs(extra.properties) do
+				els.flow[property] = value
+			end
+		end
+	end
+	els.ew = els.flow.add{
+		type = "empty-widget",
+		name = self.prefix.."ew",
+		style = "draggable_space_header",
+	}
+	els.ew.style.horizontally_stretchable = true
+	els.ew.style.height = 24
+	els.flow.add{
+		type = "sprite-button",
+		name = self.prefix.."close",
+		sprite = "utility/close",
+		style = "frame_action_button",
+	}
+end

@@ -1,0 +1,30 @@
+data:extend({
+    {
+        type = "item",
+        name = "helicopter-remote-equipment",
+        icon = "__HelicopterRevival__/graphics/icons/heli-remote-icon.png",
+        icon_size = 64,
+        place_as_equipment_result = "helicopter-remote-equipment",
+        flags = {},
+        subgroup = "equipment",
+        order = "g[heli-remote]-a[heli-remote-item]",
+        inventory_move_sound = data.raw["item"]["night-vision-equipment"].inventory_move_sound,
+        pick_sound = data.raw["item"]["night-vision-equipment"].pick_sound,
+        drop_sound = data.raw["item"]["night-vision-equipment"].drop_sound,
+        stack_size = 1,
+    },
+    {
+        type = "item",
+        name = "helicopter-pad",
+        icon = "__HelicopterRevival__/graphics/icons/heli_pad.png",
+        icon_size = 64,
+        flags = {},
+        subgroup = "transport",
+        order = "b[personal-transport]-d[helicopter-pad]",
+        inventory_move_sound = data.raw["item"]["stone-wall"].inventory_move_sound,
+        pick_sound = data.raw["item"]["stone-wall"].pick_sound,
+        drop_sound = data.raw["item"]["stone-wall"].drop_sound,
+        place_result = "helicopter-pad",
+        stack_size = 10
+    },
+})

@@ -1,0 +1,291 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.6.5
+Date: 2026-06-18
+  Bugfixes:
+    - now overwriting fuel categories only for helicopters, instead of call cars, when K2 or K2SO is enabled
+---------------------------------------------------------------------------------------------------
+Version: 0.6.4
+Date: 2026-06-14
+  Bugfixes:
+    - fixed remote heli call command not working and throwing wrong error text
+---------------------------------------------------------------------------------------------------
+Version: 0.6.3
+Date: 2026-03-21
+  Bugfixes:
+    - fixed crash related to renaming newly placed helicopters
+---------------------------------------------------------------------------------------------------
+Version: 0.6.2
+Date: 2026-03-20
+  Bugfixes:
+    - no more soulless characters spawn when remotely driven helis get destroyed
+    - preventing endless fuel consumption when crashing due to no fuel and then refueling while never changing driving_state
+    - fixed crash when crashing with heli
+    - fixed crash with missing metatable (nextFrame)
+    - fixed crash due to math3d
+---------------------------------------------------------------------------------------------------
+Version: 0.6.1
+Date: 2026-03-19
+  Changes:
+    - crediting scout heli model creator in changelog
+---------------------------------------------------------------------------------------------------
+Version: 0.6.0
+Date: 2026-03-18
+  Major Features:
+    - added API for other mods to register their own helis to be handled like this one's (see documentation)
+    - added scout helicopter (model by zumf)
+  Features:
+    - heli shadow distance increases with hover height
+    - re-added optional heli hover bobbing (setting)
+    - performance increase for heli idle mode
+    - added option to disable heli creation (relevant for API users)
+    - added support for fun-mode mod (heli body will spin around static blades)
+  Changes:
+    - split up tech tree
+    - minor visual improvements of heli rotor center
+  Bugfixes:
+    - heli visually centered again
+---------------------------------------------------------------------------------------------------
+Version: 0.5.4
+Date: 2026-01-03
+  Bugfixes:
+    - incorrect equipment grid categories when using K2/SE
+---------------------------------------------------------------------------------------------------
+Version: 0.5.3
+Date: 2026-01-01
+  Features:
+    - pad cams being removed when pad being removed
+    - placing remote in everything but character grids won't trigger GUI button
+    - hint message when placing remote in everything but character grids
+    - when using Krastorio 2, remote can only be placed in character armor grids
+  Bugfixes:
+    - crash when building first heli/pad
+    - removing invalid pads in background
+    - catching duplicate GUI creation (some mods like to f around <.<)
+  Locale:
+    - hint about uselessness of remote in everything but character grids
+---------------------------------------------------------------------------------------------------
+Version: 0.5.2
+Date: 2025-12-31
+  Bugfixes:
+    - crash if SA isn't present / enabled
+---------------------------------------------------------------------------------------------------
+Version: 0.5.1
+Date: 2025-12-30
+  Bugfixes:
+    - removed accidentally included content
+---------------------------------------------------------------------------------------------------
+Version: 0.5.0
+Date: 2025-12-30
+  Major Features:
+    - GUI visually improved
+    - GUI received proper close button
+    - Helis/Pads can be filtered by current/Heli surface
+    - Heli and Pad custom name support
+  Features:
+    - GUI now refreshing when adding new Pads
+    - GUI now refreshing after Heli receives command
+  Locale:
+    - Unification of some wordings
+    - German: added missing locale
+  Bugfixes:
+    - Deconstructing Helipads on Aquilo now properly removes concrete tiles 
+---------------------------------------------------------------------------------------------------
+Version: 0.4.6
+Date: 2025-11-10
+  Major Features:
+    - Remote GUI functions are surface aware now (cams show correct surface of helis; helis can't reach pads/players/markers on different surfaces)
+  Features:
+    - Surface name overlay on cams
+---------------------------------------------------------------------------------------------------
+Version: 0.4.5
+Date: 2025-11-04
+  Info:
+    - helis aren't yet surface aware, the cameras could show "ghost"-helis, we are working on it
+  Bugfixes:
+    - fixed some oudated code that caused an error when toggling the remote while remote driving
+---------------------------------------------------------------------------------------------------
+Version: 0.4.4
+Date: 2025-11-04
+  Bugfixes:
+    - added missing migration for equipment
+---------------------------------------------------------------------------------------------------
+Version: 0.4.3
+Date: 2025-11-02
+  Changes:
+    - Krastorio2 Spaced Out support
+    - Factoriopedia unification: renaming and migrating recipe and items of heli, -pad and -remote so it shows up as only one entry
+    - crafting of heli now takes 60 seconds
+  Bugfixes:
+    - Some changelog find / replace texts
+---------------------------------------------------------------------------------------------------
+Version: 0.4.2
+Date: 26.10.2025
+  Changes:
+    - TheKingJo: added remote driving
+    - TheKingJo: added vehicle logistics
+  Bugfixes:
+    - TheKingJo: on_save error when trying to save while heli doesn't have enough fuel should be fixed now
+---------------------------------------------------------------------------------------------------
+Version: 0.4.1
+Date: 12.10.2025
+  Bugfixes:
+    - Typo in quality implementation that broke equipment grid (and the mod)
+---------------------------------------------------------------------------------------------------
+Version: 0.4.0
+Date: 01.10.2025
+  Bugfixes:
+    - K2 support: Weapon not loading correctly
+  Changes:
+    - TheKingJo: heli got mined sound
+    - TheKingJo: made heli a military target because it is
+    - TheKingJo: one heli fits in a rocket now (just as car and tank)
+    - TheKingJo: flipped one setting default cause it makes more sense this way
+    - TheKingJo: made the search field for map marker bigger
+    - TheKingJo: added tooltips for all the other GUI buttons
+    - TheKingJo: added english and german locale where missing
+    - TheKingJo: heliControllers don't get stored twice anymore (heliController l.38)
+    - TheKingJo: streamlined the prototype initiation files (noone needs a whole file in an extra folder for a single prototype definition)
+    - TheKingJo: removed unused stdlib files cause the were annoying 
+    - TheKingJo: some formatting cleanup (removed spaces at ends of lines, corrected some indentations, removed empty lines where it didn't look right)
+    - TheKingJo: massive refactor of entire mod
+    - 1000101: introduce quality
+---------------------------------------------------------------------------------------------------
+Version: 0.3.1
+Date: 22.06.2025
+  Bugfixes:
+    - Krastorio2 2.0 support
+    - update stdlib to stdlib2 (with minor fixes)
+    - cleanup the log spam
+  Changes:
+    - roland77: added scripts/build_package.py for easy deployment
+    - roland77: added Krastorio2, SeaBlock as optional dependency as it was found in code
+    - roland77: removed self-advertisement in Korean locale file
+    - roland77: added some missing POSIX-compliant new-line character
+    - roland77: best is to test `script.active_mods["foo"]`` or `mods["foo"]` instead of `foo_something`
+---------------------------------------------------------------------------------------------------
+Version: 0.3.0
+Date: 27.10.2024
+  Bugfixes:
+    - Rendering below the power wires
+  Changes:
+    - Factorio 2.0
+    - Adjust some research ratios
+    - Remove IR3 support (there won't be IR3 for factorio 2.0)
+    - Remove equpment grid (for now, at least)
+---------------------------------------------------------------------------------------------------
+Version: 0.2.4
+Date: 12.08.2024
+  Bugfixes:
+    - Bugfixes crash when not in IR3
+---------------------------------------------------------------------------------------------------
+Version: 0.2.3
+Date: 12.08.2024
+  Changes:
+    - Add support IR3's fuel arrangement
+    - umanamente: Option to ignore biter's annoyances during the flight
+    - LUISDASARTIMANHAS: Brazilian / Portugese translations
+---------------------------------------------------------------------------------------------------
+Version: 0.2.2
+Date: 25.12.2022
+  Bugfixes:
+    - Changelog date / credit fixes
+    - Don't enable anti-material-gun if the ammo for it is missing or disabled in config (K2)
+    - Don't crash if the tile under the helicopter was removed
+    - LEFD: Lower Volume of heli gun (K2)
+    - AirwaveRaptor: When loading HelicopterRevival with Bob's Vehicle Equipment mod and Vehicle Grid, the helicopter only accepts armor equipment, instead of taking vehicle equipment like it's probably supposed to.
+  Changes:
+    - Add support for SeaBlock's fuel arrangement
+    - Add support for vtk-armor-plating
+---------------------------------------------------------------------------------------------------
+Version: 0.2.1
+Date: 21.04.2022
+  Bugfixes:
+    - Fixed a potential crash when unloading GaugeGUI
+    - Restore shadow positioning when auto-landing
+---------------------------------------------------------------------------------------------------
+Version: 0.2.0
+Date: 13.04.2022
+  Bugfixes:
+    - Fixed default up / down keys (thanks to Keysivi / Pi-C from Discussion thread)
+    - Updated K2 anti-material sounds thanks to RafaelFuchs
+    - Fixed crash when attempting to load with newer version of Krastorio
+    - Bump optional K2 requirements to 1.2.7 due to assets splitting into its own mod...
+  Changes:
+    - shelaf: Update japanese locale 
+    - snouz: HR version of the helicopter entity.
+    - snouz: New (hd) icons (technologies, items, equipment).
+    - snouz: Shifting shadow to the right as helicopter rises (like other entities).
+    - snouz: Added custom map icon.
+    - snouz: New mod icon.
+    - snouz: Centered alert icon.
+    - snouz: Fixed Helipad shadow.
+    - snouz: Optimized PNG to gain space.
+---------------------------------------------------------------------------------------------------
+Version: 0.1.5
+Date: 27.10.2021
+  Changes:
+    - More startup configuration options for flamethrower, gun, and rocket launcher
+    - More Japanese translations thanks to Shelaf
+    - Add an optional K2 anti-material gun
+  Bugfixes:
+    - Fixed potential crash when using Alien Biomes in conjunction of Asphalt Roads
+    - Fixed future date in the changelog
+    - Uniformed date format in changelog
+  Additional credits:
+    - Modified K2 icon for Anti-material gun as a temporary placeholder
+---------------------------------------------------------------------------------------------------
+Version: 0.1.4
+Date: 06.04.2021
+  Changes:
+    - Fixed continued fuel consumption even after the engine shut down
+---------------------------------------------------------------------------------------------------
+Version: 0.1.3
+Date: 29.03.2021
+  Changes:
+    - Dedicated equipment grid (K2-compatible)
+    - Don't land when following player setting from 1000101 (thanks!)
+---------------------------------------------------------------------------------------------------
+Version: 0.1.2
+Date: 01.12.2020
+  Changes:
+    - Fix crash caused by russian locale
+---------------------------------------------------------------------------------------------------
+Version: 0.1.1
+Date: 30.11.2020
+  Changes:
+    - Fix crash on helipad select
+---------------------------------------------------------------------------------------------------
+Version: 0.1.0
+Date: 29.11.2020
+  Changes:
+    - Changes for Factorio 1.1.x (technology changes and mod_gui isn't a global anymore)
+    - Schmarotzer: Russian translation update
+---------------------------------------------------------------------------------------------------
+Version: 0.0.5
+Date: 23.06.2020
+  Changes:
+    - dgw: Migration from old Helicopters (not active in this version, sorry)
+    - wchristian: load / save crash fix
+    - trilader: Updates for factorio 0.18.28+
+---------------------------------------------------------------------------------------------------
+Version: 0.0.4
+Date: 07.04.2020
+  Changes:
+    - Japanese locale from shelaf (thanks!)
+---------------------------------------------------------------------------------------------------
+Version: 0.0.3
+Date: 07.04.2020
+  Bugfixes:
+    - Compatibility with Krastorio 2
+---------------------------------------------------------------------------------------------------
+Version: 0.0.2
+Date: 12.03.2020
+  Bugfixes:
+    - Fix some icons
+  Changes:
+    - Added flamethrower to the helicopter
+---------------------------------------------------------------------------------------------------
+Version: 0.0.1
+Date: 14.02.2020
+  Changes:
+    - Fork from Kumpu's Helicopters with fixes for Factorio 0.18.2+
